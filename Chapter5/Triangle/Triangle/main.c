@@ -8,11 +8,22 @@
 
 #include <stdio.h>
 
+float remainingAngle(float angleA, float angleB)
+{
+    if ( angleA > 0 && angleB > 0 && (angleA + angleB) < 180 ) {
+            return 180.0 - angleA - angleB;
+    } else {
+        return 0;
+    }
+    
+}
+
 int main(int argc, const char * argv[])
 {
-
-    // insert code here...
-    printf("Hello, World!\n");
+    float angleA = 30.0;
+    float angleB = 60.0;
+    float angleC = remainingAngle(angleA, angleB);
+    printf("The third angle is %.2f\n", angleC);
     return 0;
 }
 
