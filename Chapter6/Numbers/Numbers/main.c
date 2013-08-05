@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 int main(int argc, const char * argv[])
 {
@@ -27,6 +28,9 @@ int main(int argc, const char * argv[])
     double y = 12345.6789;
     printf("y is %.2f\n", y);
     printf("y is %.2e\n", y);
+    
+    // Challenge from chapter 6
+    printf("the sine of 1 radian is %.3f", sin(1.0));
     
     return 0;
 }
