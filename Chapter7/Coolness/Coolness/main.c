@@ -47,6 +47,15 @@ int main(int argc, const char * argv[])
         i++;
     } while (i < 13);
     
+    // Challenge for chapter 7
+    for (int i = 99; i >= 0; i-=3) {
+        printf("%d\n", i);
+        
+        if (i % 5 == 0) {
+            printf("Found one!\n");
+        }
+    }
+    
     return 0;
 }
 
