@@ -19,6 +19,17 @@ int main(int argc, const char * argv[])
         
         NSDate *later = [now dateByAddingTimeInterval:100000];
         NSLog(@"In 100,000 seconds it will be %@", later);
+        
+        // Challenge from chapter 12
+        NSDateComponents *birthdayDateComponents = [[NSDateComponents alloc] init];
+        [birthdayDateComponents setMonth:4];
+        [birthdayDateComponents setDay:12];
+        [birthdayDateComponents setYear:1981];
+        
+        NSCalendar *gCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDate *birthday = [gCal dateFromComponents:birthdayDateComponents];
+        
+        NSLog(@"I've been alive for %f seconds", [now timeIntervalSinceDate:birthday]);
     }
     
     return 0;
