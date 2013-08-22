@@ -25,6 +25,10 @@ int main(int argc, const char * argv[])
                                         inUnit:NSMonthCalendarUnit
                                        forDate:now];
         NSLog(@"This day is %lu of the month", day);
+        
+        // Challege from chapter 13
+        BOOL isDaylightSavings = [[NSTimeZone systemTimeZone] isDaylightSavingTime];
+        NSLog(@"Are we in daylight savings? %@", isDaylightSavings ? @"Yes" : @"No");
     }
     
     return 0;
