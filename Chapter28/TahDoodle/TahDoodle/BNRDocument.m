@@ -62,6 +62,24 @@
                                                               format:NSPropertyListXMLFormat_v1_0
                                                              options:0
                                                                error:outError];
+    if (!data) {
+        if (outError != NULL) {
+            NSString *locFailure = [*outError localizedFailureReason];
+            
+            if (locFailure) {
+                NSMutableDictionary *newUserInfo = [NSMutableDictionary dictionaryWithCapacity:[[[*outError userInfo] allKeys] count]];
+                [newUserInfo setDictionary:[*outError userInfo]];
+                NSString *description = [NSString stringWithFormat:NSLocalizedString(@"Custom error save failed... Reason: %@", @""), locFailure];
+                [newUserInfo setObject:description forKey:NSLocalizedDescriptionKey];
+                
+                NSError *newError = [NSError errorWithDomain:[*outError domain] code:[*outError code] userInfo:newUserInfo];
+                NSLog(@"New error: %@", newError);
+                *outError = newError;
+            }
+        }
+        
+        return nil;
+    }
     
     // return our newly-packed NSData object
     return data;
@@ -85,8 +103,27 @@
                                                           options:NSPropertyListMutableContainers
                                                            format:NULL
                                                             error:outError];
-    // return success or failure depending on success of the above call
-    return (todoItems != nil);
+    
+    if (!todoItems) {
+        if (outError != NULL) {
+            NSString *locFailure = [*outError localizedFailureReason];
+            
+            if (locFailure) {
+                NSMutableDictionary *newUserInfo = [NSMutableDictionary dictionaryWithCapacity:[[[*outError userInfo] allKeys] count]];
+                [newUserInfo setDictionary:[*outError userInfo]];
+                NSString *description = [NSString stringWithFormat:NSLocalizedString(@"Custom error read failed... Reason: %@", @""), locFailure];
+                [newUserInfo setObject:description forKey:NSLocalizedDescriptionKey];
+                
+                NSError *newError = [NSError errorWithDomain:[*outError domain] code:[*outError code] userInfo:newUserInfo];
+                NSLog(@"New error: %@", newError);
+                *outError = newError;
+            }
+        }
+        
+        return NO;
+    }
+
+    return YES;
 }
 
 #pragma mark - Actions
@@ -107,6 +144,19 @@
     
     // -updateChangeCount: tells the application whether or not the document
     // has unsaved changes. NSChangeDone flags the document as unsaved.
+    [self updateChangeCount:NSChangeDone];
+}
+
+- (IBAction)deleteExistingItem:(id)sender
+{
+    long selectedIndex = [itemTableView selectedRow];
+    
+    if (selectedIndex == -1) {
+        return;
+    }
+    
+    [todoItems removeObjectAtIndex:selectedIndex];
+    [itemTableView reloadData];
     [self updateChangeCount:NSChangeDone];
 }
 
