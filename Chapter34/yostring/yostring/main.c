@@ -10,6 +10,30 @@
 #include <stdlib.h> // For malloc/free
 #include <string.h> // For strlen
 
+int spaceCount(const char *s)
+{
+    int count = 0;
+    int i = 0;
+    
+    while (s[i] != '\0') {
+        if (s[i] == 0x20) {
+            printf("Found one\n");
+            count++;
+        }
+        
+        i++;
+    }
+    
+//    for (int i = 0; i < strlen(s); i++) {
+//        if (s[i] == 0x20) {
+//            printf("Found one\n");
+//            count++;
+//        }
+//    }
+    
+    return count;
+}
+
 int main(int argc, const char * argv[])
 {
     char x = 0x21; // The character '!'
@@ -67,6 +91,9 @@ int main(int argc, const char * argv[])
     
     // Print out the third letter
     printf("The third letter is %c\n", start[2]);
+    
+    const char *sentence = "He was not in the cab at the time.";
+    printf("\"%s\" has %d spaces\n", sentence, spaceCount(sentence));
     
     // Free the memory so it can be reused
     //free(start);
