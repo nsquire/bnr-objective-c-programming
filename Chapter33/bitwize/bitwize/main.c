@@ -7,6 +7,27 @@
 //
 
 #include <stdio.h>
+#include <string.h>     /* strcat */
+#include <stdlib.h>     /* strtol */
+
+//assumes little endian
+void printBits(size_t const size, void const * const ptr)
+{
+    unsigned char *b = (unsigned char*) ptr;
+    unsigned char byte;
+    int i, j;
+    
+    for (i=size-1;i>=0;i--)
+    {
+        for (j=7;j>=0;j--)
+        {
+            byte = b[i] & (1<<j);
+            byte >>= j;
+            printf("%u", byte);
+        }
+    }
+    puts("");
+}
 
 int main(int argc, const char * argv[])
 {
@@ -41,6 +62,17 @@ int main(int argc, const char * argv[])
     
     printf("Hex: %x shifted right one place is %x\n", a, h);
     printf("Decimal: %d shifted right one place is %d\n", a, h);
+    
+    // Challenge from chapter 33
+    unsigned long int challenge = 1;
+    
+    for (int i = 0; i < 64; i++) {
+        challenge = challenge << 2;
+        challenge = challenge + 1;
+    }
+    
+    printf("Test number: ");
+    printBits(sizeof(challenge), &challenge);
     
     return 0;
 }
